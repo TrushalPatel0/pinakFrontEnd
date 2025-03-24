@@ -164,6 +164,7 @@ const DocumentTypes = () => {
         <table
           border="1"
           style={{ width: "100%", textAlign: "left", marginTop: "20px" }}
+          className="table table-hover"
         >
           <thead>
             <tr>

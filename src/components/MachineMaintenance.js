@@ -286,7 +286,7 @@ const MachineMaintenance = () => {
             <button className="btn btn-sm btn-outline-primary d-flex align-items-center" type="button" id="button-addon2" style={{ height: "30px", width: "auto" }}><i class="fa-solid fa-magnifying-glass"></i></button>
           </div>
         </div>
-
+        <div className='card mt-4 reportbackground'>
         <div className="table-responsive">
           <table className="table table-hover">
             <thead>
@@ -334,6 +334,7 @@ const MachineMaintenance = () => {
               )}
             </tbody>
           </table>
+        </div>
         </div>
       </div>
       {/* Modal for Add/Edit Maintenance */}

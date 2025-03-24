@@ -321,6 +321,7 @@ const Projects = () => {
           </div>
 
         </div>
+        <div className='card mt-4 reportbackground'>
         <div className="table-responsive">
           <table className="table table-hover">
             <thead>
@@ -378,6 +379,7 @@ const Projects = () => {
               )}
             </tbody>
           </table>
+        </div>
         </div>
       </div>
       {/* Modal for Add/Edit Project */}

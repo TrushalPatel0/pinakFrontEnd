@@ -10,25 +10,41 @@ export const DateUserProvider = ({ children }) => {
   const url = backendurl()
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [userId, setUserId] = useState(1);
+  const [userId, setUserId] = useState(null);
   const [personsList, setPersonsList] = useState([]);
 
   const [machinesList, setmachinesList] = useState([]);
-  const [machineID, setMachineID] = useState(1);
+  const [machineID, setMachineID] = useState(null);
+
+  const [projectList, setProjectList] = useState([]);
+  const [projectID, setProjectID] = useState(null);
 
   // Dummy user data for react-select
-  const users = personsList.map((person) => ({
-    value: person.person_id,
-    label: person.person_name
-  }))
+  const users = [
+    { value: null, label: "Select Person" },
+    ...personsList.map((person) => ({
+      value: person.person_id,
+      label: person.person_name,
+    })),
+  ];
 
-  const machines = machinesList.map((machine) => ({
-    value: machine.machine_id,
-    label: machine.machine_name + ' ' + machine.machine_number_plate
-  }))
+  const machines = [
+    { value: null, label: "Select Machine" },
+    ...machinesList.map((machine) => ({
+      value: machine.machine_id,
+      label: machine.machine_name + " " + machine.machine_number_plate,
+    })),
+  ];
+  
+  const projects = [
+    { value: null, label: "Select Project" },
+    ...projectList.map((project) => ({
+      value: project.project_id,
+      label: project.project_name,
+    })),
+  ];
   
   
-
 
   useEffect(() => {
     const fetchPersonList = async () => {
@@ -36,6 +52,15 @@ export const DateUserProvider = ({ children }) => {
         setPersonsList(response.data.data)
     }
     fetchPersonList()
+  }, [])
+
+
+  useEffect(() => {
+    const fetchProjectList = async () => {
+      const response = await axios.get(`${url}project_list`)
+      setProjectList(response.data.data)
+    }
+    fetchProjectList()
   }, [])
 
 
@@ -49,10 +74,12 @@ export const DateUserProvider = ({ children }) => {
 
 
 
+
+
   return (
     <DateUserContext.Provider value={{ startDate, setStartDate, endDate, setEndDate, userId, setUserId, users, machineID,
     setMachineID,
-      machines }}>
+      machines, projectID, setProjectID, projects }}>
       {children}
     </DateUserContext.Provider>
   );
@@ -62,6 +89,7 @@ export const DateUserProvider = ({ children }) => {
 export const useDate = () => useContext(DateUserContext);
 export const useUser = () => useContext(DateUserContext);
 export const useMachine = () => useContext(DateUserContext);
+export const useProject = () => useContext(DateUserContext)
 
 // DateUserSelection Component
 export const DateSelection = () => {
@@ -109,7 +137,6 @@ export const UserSelection = () => {
     );
   };
 
-
 export const MachineSelection = () => {
   const { machineID, setMachineID, machines } = useMachine();
 
@@ -120,6 +147,21 @@ export const MachineSelection = () => {
         options={machines}
         value={machines.find((machine) => machine.value === machineID)}
         onChange={(selectedOption) => setMachineID(selectedOption.value)}
+      />
+    </div>
+  );
+};
+
+export const ProjectSelection = () => {
+  const { projectID, setProjectID, projects } = useProject();
+
+  return (
+    <div style={{ padding: "10px", maxWidth: "300px" }}>
+      <label>Select Project:</label>
+      <Select
+        options={projects}
+        value={projects.find((project) => project.value === projectID)}
+        onChange={(selectedOption) => setProjectID(selectedOption.value)}
       />
     </div>
   );

@@ -150,7 +150,7 @@ export default function Bank_Debit_Report() {
                 {bankDebitData?.money_credit_into_bank?.length > 0 && (
                     <div className="">
                         <div className="">
-                            <div className="borderr reporttitle font-bold">Money Credit Into Bank</div>
+                            <div className="borderr reporttitle font-bold">Money Debit Into Bank</div>
                             <div className="table-responsive">
                                 <table className="table table-hover">
                                     <thead>
