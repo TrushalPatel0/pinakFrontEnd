@@ -11,7 +11,7 @@ export default function ShowPerson_Report() {
     useEffect(() => {
         const fetchShowPersonReport = async () => {
             try {
-                const response = await axios.get(`${url}/show_person_report/?person_id=${userId}`);
+                const response = await axios.get(`${url}show_person_report/?person_id=${userId}`);
                 console.log("Person Report Data: ", response.data.data);
                 setPersonReportData(response.data.data);
             } catch (error) {
