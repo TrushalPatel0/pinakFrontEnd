@@ -685,7 +685,7 @@ const MoneyCreditDebit = () => {
                                             <option value="">Select Office kharch Type</option>
                                             {OfficeKharchtypesData.length > 0 ? (
                                                 OfficeKharchtypesData.map((x) => (
-                                                    <option key={x.office_kharch_type_id} value={x.office_kharch_type_name}>
+                                                    <option key={x.office_kharch_type_id} value={x.office_kharch_type_id}>
                                                         {x.office_kharch_type_name}
                                                     </option>
                                                 ))

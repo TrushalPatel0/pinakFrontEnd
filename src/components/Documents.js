@@ -40,7 +40,7 @@ const Documents = () => {
   // Fetch documents
   const fetchDocuments = async () => {
     try {
-      const response = await axios.get(`${url}/show_documents/?person_id=${userId}&machine_id=${machineID}&project_id=${projectID}`);
+      const response = await axios.get(`${url}show_documents/?person_id=${userId}&machine_id=${machineID}&project_id=${projectID}`);
       setDocuments(response.data.data);
       setdocument_types(response.data.document_types)
       setLoading(false);
