@@ -1,23 +1,26 @@
 import { React, useState, useEffect } from 'react'
 import { backendurl } from './backend_url';
 import axios from 'axios';
+import { useMachine, MachineSelection } from './Context/ContextDataShare';
 
 export default function Maintenance_Report() {
+    const {machineID} = useMachine()
     const url = backendurl()
     const [maintenanceData, setMaintenanceData] = useState([]);
     useEffect(() => {
         const fetchMaintenanceReport = async () => {
             try {
-                const response = await axios.get(`${url}maintenance_report`);
+                const response = await axios.get(`${url}maintenance_report?machine_id=${machineID}`);
                 setMaintenanceData(response.data);
             } catch (error) {
                 console.error("Error fetching maintenance report:", error);
             }
         };
         fetchMaintenanceReport();
-    }, []);
+    }, [machineID]);
     return (
         <div>
+            <MachineSelection />
             <div className='card mt-4 reportbackground p-4'>
                 <div className="mb-2 flex justify-center items-center">
                     <img
