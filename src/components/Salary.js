@@ -8,8 +8,8 @@ import { backendurl } from './backend_url';
 
 
 const Salary = () => {
-    const urll = backendurl();
-  
+  const urll = backendurl();
+
   const [Salary, setSalary] = useState([]);
   const [TotalSalaryAmount, setTotalSalaryAmount] = useState([]);
   const [worktypes, setworktypes] = useState([]);
@@ -32,18 +32,18 @@ const Salary = () => {
     setReceiverPersonId({ person_id: newReceiverId }); // Update the state
 
     try {
-        fetchSalary(newReceiverId)
+      fetchSalary(newReceiverId)
     } catch (error) {
-        console.error("Error fetching money debit/credit data:", error);
+      console.error("Error fetching money debit/credit data:", error);
     }
-};
-const receiver_options = [
-  { value: "null", label: "વ્યક્તિ" },
-  ...PersonsData.map((type) => ({
+  };
+  const receiver_options = [
+    { value: "null", label: "વ્યક્તિ" },
+    ...PersonsData.map((type) => ({
       value: type.person_id,
       label: `${type.person_name} (${type.person_contact_number})`,
-  })),
-];
+    })),
+  ];
 
   // ====================================End filter person in salary ============================================
 
@@ -53,7 +53,7 @@ const receiver_options = [
   }));
 
 
-  
+
 
   const handlePersonChange = (selectedOption) => {
     setFormData((prevData) => ({
@@ -74,7 +74,7 @@ const receiver_options = [
     const total = Salary.reduce(
       (sum, sal) => sum + parseFloat(sal.salary_amount || 0),
       0
-      
+
     );
     setTotalSalaryAmount(total);
   }, [Salary]);
@@ -88,11 +88,11 @@ const receiver_options = [
     salary_working_days: "",
     salary_details: "",
     person_id: "",
-    work_type:"",
+    work_type: "",
   });
 
   // Fetch machine details
-  const fetchSalary = async (person_id=null) => {
+  const fetchSalary = async (person_id = null) => {
     try {
       const response = await axios.get(`${urll}show_salary/?person_id=${person_id}`);
       setSalary(response.data.data || []);
@@ -239,8 +239,8 @@ const receiver_options = [
           </div>
         )}
         <h5 className="text-1xl font-extrabold text-black-600 decoration-dashed tracking-wide">
-  સેલરી ડિટેલ્સ
-</h5>
+          સેલરી ડિટેલ્સ
+        </h5>
 
         <button
           type="button"
@@ -251,131 +251,131 @@ const receiver_options = [
         </button>
 
         <div className="w-100 md:w-25 mb-3"><Select
-                        options={receiver_options}
-                        value={receiver_options.find((option) => option.value === ReceiverPersonId.person_id) || null}
-                        onChange={handleReceiverChange}
-                        placeholder="વ્યક્તિ"
-                        isSearchable
-                        isClearable
-                        className="react-select-container"
-                        classNamePrefix="react-select"
-                    /></div>
+          options={receiver_options}
+          value={receiver_options.find((option) => option.value === ReceiverPersonId.person_id) || null}
+          onChange={handleReceiverChange}
+          placeholder="વ્યક્તિ"
+          isSearchable
+          isClearable
+          className="react-select-container"
+          classNamePrefix="react-select"
+        /></div>
         <div className="grid grid-cols-2 md:grid-cols-6  gap-3 mb-3">
-        
-        <div className="card cardbg3">
-          <div className="text-yellow-500 font-bold">ટોટલ આપવાનો પગાર</div>
-          <div className="text-yellow-500 font-bold"><i class="fa-solid fa-indian-rupee-sign"></i> {TotalSalaryAmount}</div>
+
+          <div className="card cardbg3">
+            <div className="text-yellow-500 font-bold">ટોટલ આપવાનો પગાર</div>
+            <div className="text-yellow-500 font-bold"><i class="fa-solid fa-indian-rupee-sign"></i> {TotalSalaryAmount}</div>
+          </div>
+
+          <div className="card cardbg3">
+            <div className="text-green-500 font-bold">ટોટલ ચૂકવેલ પગાર</div>
+            <div className="text-green-500 font-bold"><i class="fa-solid fa-indian-rupee-sign"></i> {TotalAmount}</div>
+          </div>
+
+          <div className="card cardbg3">
+            <div className="text-red-500 font-bold">ટોટલ ચુકવણી રકમ</div>
+            <div className="text-red-500 font-bold"><i class="fa-solid fa-indian-rupee-sign"></i> {TotalSalaryAmount - TotalAmount}</div>
+          </div>
+
+
         </div>
 
-        <div className="card cardbg3">
-          <div className="text-green-500 font-bold">ટોટલ ચૂકવેલ પગાર</div>
-          <div className="text-green-500 font-bold"><i class="fa-solid fa-indian-rupee-sign"></i> {TotalAmount}</div>
-        </div>
 
-        <div className="card cardbg3">
-          <div className="text-red-500 font-bold">ટોટલ ચુકવણી રકમ</div>
-          <div className="text-red-500 font-bold"><i class="fa-solid fa-indian-rupee-sign"></i> {TotalSalaryAmount - TotalAmount}</div>
-        </div>
 
-        
-        </div>
-        
 
-        
-        
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 mt-3">
-        <div className="card">
-        <h6>ચૂકવવાનો પગાર</h6>
-        <div className="table-responsive">
-          <table className="table table-striped table-hover">
-            <thead>
-              <tr>
-                <th>ક્રમ</th>
-                <th>નામ</th>
-                <th>તારીખ</th>
-                <th>દિવસ</th>
-                <th>ચૂકવવાનો પગાર</th>
-                <th>પગાર</th>
-                <th>ડીટેલ</th>
-                <th>અપડેટ</th>
-                <th>ડિલીટ</th>
-              </tr>
-            </thead>
-            <tbody>
-              {Salary.length > 0 ? (
-                Salary.map((salary, index) => (
-                  <tr key={salary.salary_id}>
-                    <td>{index + 1}</td>
-                    <td>{salary.person_id__person_name || "N/A"} [{salary.person_id__person_contact_number}]</td>
-                    <td>{salary.salary_date || "N/A"}</td>
-                    <td>{salary.salary_working_days || "N/A"}</td>
-                    <td>{salary.salary_amount || "N/A"}</td>
-                    <td>{salary.person_id__person_salary || "N/A"}</td>
-                    <td>{salary.salary_details || "N/A"}</td>
-                    <td>
-                      <i
-                        className="fa-regular fa-pen-to-square"
-                        onClick={() => editDetailsGetData(salary.salary_id)}
-                      ></i>
-                    </td>
-                    <td>
-                      <i
-                        class="fa-regular fa-trash-can"
-                        onClick={() => opendeleteModal(salary.salary_id)}
-                      ></i>
-                    </td>
+          <div className="card">
+            <h6>ચૂકવવાનો પગાર</h6>
+            <div className="table-responsive">
+              <table className="table table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th>ક્રમ</th>
+                    <th>નામ</th>
+                    <th>તારીખ</th>
+                    <th>દિવસ</th>
+                    <th>ચૂકવવાનો પગાર</th>
+                    <th>પગાર</th>
+                    <th>ડીટેલ</th>
+                    <th>અપડેટ</th>
+                    <th>ડિલીટ</th>
                   </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="9">ડેટા અવાઈલેબલ નથી..</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-        </div>
-      
-        
-        <div className="card">
-        <h6>ચૂકવેલ પગાર</h6>
-        <div className="table-responsive">
-        
-          <table className="table table-striped table-hover">
-            <thead>
-              <tr>
-                <th>ક્રમ</th>
-                <th>નામ</th>
-                <th>તારીખ</th>
-                <th>અમાઉન્ટ</th>
-                <th>મોડ</th>
-                <th>ડીટેલ</th>
-              </tr>
-            </thead>
-            <tbody>
-              {MoneyTransaction.length > 0 ? (
-                MoneyTransaction.map((x, index) => (
-                  <tr key={x.money_id}>
-                    <td>{index + 1}</td>
-                    <td>{x.receiver_person_id__person_name || "N/A"} [{x.receiver_person_id__person_contact_number}]</td>
-                    <td>{x.money_date || "N/A"}</td>
-                    <td>{x.money_amount || "N/A"}</td>
-                    <td>{x.money_payment_mode || "N/A"}</td>
-                    <td>{x.money_payment_details || "N/A"}</td>
+                </thead>
+                <tbody>
+                  {Salary.length > 0 ? (
+                    Salary.map((salary, index) => (
+                      <tr key={salary.salary_id}>
+                        <td>{index + 1}</td>
+                        <td>{salary.person_id__person_name || "N/A"} [{salary.person_id__person_contact_number}]</td>
+                        <td>{salary.salary_date || "N/A"}</td>
+                        <td>{salary.salary_working_days || "N/A"}</td>
+                        <td>{salary.salary_amount || "N/A"}</td>
+                        <td>{salary.person_id__person_salary || "N/A"}</td>
+                        <td>{salary.salary_details || "N/A"}</td>
+                        <td>
+                          <i
+                            className="fa-regular fa-pen-to-square"
+                            onClick={() => editDetailsGetData(salary.salary_id)}
+                          ></i>
+                        </td>
+                        <td>
+                          <i
+                            class="fa-regular fa-trash-can"
+                            onClick={() => opendeleteModal(salary.salary_id)}
+                          ></i>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="9">ડેટા અવાઈલેબલ નથી..</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+
+          <div className="card">
+            <h6>ચૂકવેલ પગાર</h6>
+            <div className="table-responsive">
+
+              <table className="table table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th>ક્રમ</th>
+                    <th>નામ</th>
+                    <th>તારીખ</th>
+                    <th>અમાઉન્ટ</th>
+                    <th>મોડ</th>
+                    <th>ડીટેલ</th>
                   </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="9">ડેટા અવાઈલેબલ નથી. </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-        </div>
+                </thead>
+                <tbody>
+                  {MoneyTransaction.length > 0 ? (
+                    MoneyTransaction.map((x, index) => (
+                      <tr key={x.money_id}>
+                        <td>{index + 1}</td>
+                        <td>{x.receiver_person_id__person_name || "N/A"} [{x.receiver_person_id__person_contact_number}]</td>
+                        <td>{x.money_date || "N/A"}</td>
+                        <td>{x.money_amount || "N/A"}</td>
+                        <td>{x.money_payment_mode || "N/A"}</td>
+                        <td>{x.money_payment_details || "N/A"}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="9">ડેટા અવાઈલેબલ નથી. </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
 
-        
+
       </div>
 
       {/* Modal for Add/Edit Machine */}
@@ -403,54 +403,54 @@ const receiver_options = [
             </div>
             <div className="modal-body">
               <form onSubmit={handleSubmit}>
-                
-                
 
-              <Select
-  options={personsoptions}
-  value={personsoptions.find((option) => option.value === formData.person_id) || null}
-  onChange={handlePersonChange}
-  placeholder="Select Person*"
-  isSearchable
-  isClearable
-  className="react-select-container mb-3"
-  classNamePrefix="react-select"
-/>
 
-              <div className="grid grid-cols-2 gap-2">
-                                  <div className="mb-3">
-                                    <select
-                                        name="work_type"
-                                        value={formData.work_type}
-                                        onChange={handleChange}
-                                        className="form-select"
-                                        required
-                                    >
-                                        <option value="">સિલેક્ટ કામ ના પ્રકાર*</option>
-                                        <option value="Fixed_Salary">ફિક્સ્ડ પગાર</option>
-                                        {worktypes.map((type) => (
-                                            <option
-                                                key={type.work_type_id}
-                                                value={type.work_type_id}
-                                            >
-                                                {type.work_type_name}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
-                
-                {formData.work_type !== 'Fixed_Salary' &&(
-                <div className="mb-3">
-                  <input
-                    type="number"
-                    name="salary_amount"
-                    value={formData.salary_amount}
-                    onChange={handleChange}
-                    placeholder="પગાર રકમ"
-                    className="form-control"
-                  />
-                </div>
-                )}
+
+                <Select
+                  options={personsoptions}
+                  value={personsoptions.find((option) => option.value === formData.person_id) || null}
+                  onChange={handlePersonChange}
+                  placeholder="Select Person*"
+                  isSearchable
+                  isClearable
+                  className="react-select-container mb-3"
+                  classNamePrefix="react-select"
+                />
+
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="mb-3">
+                    <select
+                      name="work_type"
+                      value={formData.work_type}
+                      onChange={handleChange}
+                      className="form-select"
+                      required
+                    >
+                      <option value="">સિલેક્ટ કામ ના પ્રકાર*</option>
+                      <option value="Fixed_Salary">ફિક્સ્ડ પગાર</option>
+                      {worktypes.map((type) => (
+                        <option
+                          key={type.work_type_id}
+                          value={type.work_type_id}
+                        >
+                          {type.work_type_name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {formData.work_type !== 'Fixed_Salary' && (
+                    <div className="mb-3">
+                      <input
+                        type="number"
+                        name="salary_amount"
+                        value={formData.salary_amount}
+                        onChange={handleChange}
+                        placeholder="પગાર રકમ"
+                        className="form-control"
+                      />
+                    </div>
+                  )}
                 </div>
 
                 <div className="mb-3">
