@@ -44,10 +44,15 @@ import MachineReport from './components/machine_report';
 import ProjectReports from './components/Project_report';
 import PersonReport from './components/person_report';
 import PersonBhaththuReport from './components/Bhaththu_report';
+import ShowPerson_Report from './components/ShowPerson_Report';
+import Bank_Credit_Report from './components/Bank_Credit_Report';
+import Bank_Debit_Report from './components/Bank_Debit_Report';
+import { DateUserProvider } from './components/Context/ContextDataShare';
+
 
 const App = () => { 
   return (
-    <>
+    <DateUserProvider>
     <Router>
       <Routes>
       
@@ -96,10 +101,13 @@ const App = () => {
           <Route path='ProjectReports' element={<ProjectReports />} />
           <Route path='PersonReports' element={<PersonReport />} />
           <Route path='PersonBhaththuReport' element={<PersonBhaththuReport />} />
+          <Route path='ShowPerson_Report' element={<ShowPerson_Report />} />
+          <Route path='Bank_Credit_Report' element={<Bank_Credit_Report />} />
+          <Route path='Bank_Debit_Report' element={<Bank_Debit_Report />} />
         </Route>
       </Routes>
     </Router>
-    </>
+    </DateUserProvider>
   );
 };
 

@@ -5,9 +5,15 @@ import Select from 'react-select';
 import Person_types_insert from './insert_update/person_types_insert';
 import { Link } from 'react-router-dom';
 import { backendurl } from './backend_url';
+import { useUser, UserSelection } from "./Context/ContextDataShare";
+import { useNavigate } from "react-router-dom";
+
+
 
 
 const Persons = () => {
+    const { setUserId } = useUser();
+    
     const urll = backendurl();
     const [personsDetails, setPersonsDetails] = useState([]);
     const [personTypes, setPersonTypes] = useState([]);
@@ -28,6 +34,8 @@ const Persons = () => {
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
     };
+
+    
 
 
     // Filter data based on search term
@@ -191,41 +199,13 @@ const Persons = () => {
     };
 
 
-
-
+    const navigate = useNavigate();
     const displayData = async (id, person_name) => {
-        try {
-            const personSalaryResponse = await axios.get(
-                `${urll}show_persons/?person_id=${id}`
-            );
-
-            const personProjectPriceResponse = await axios.get(
-                `${urll}show_project_person/?person_id=${id}`
-            );
-
-            const salaryData = personSalaryResponse.data.data || [];
-            const totalPersonSalary = salaryData.reduce(
-                (sum, x) => sum + parseFloat(x.person_salary || 0),
-                0
-            );
-
-            const personProjectPriceData = personProjectPriceResponse.data.data || [];
-            const personTotalPrice = personProjectPriceData.reduce(
-                (sum, x) => sum + parseFloat(x.project_person_total_price || 0),
-                0
-            );
-
-            setPersonName(person_name);
-            settotalSalaryAmount(totalPersonSalary);
-            setPersonTotalPrice(personTotalPrice);
-
-            const profitLoss = personTotalPrice - totalPersonSalary;
-            setProfitLossPerson(profitLoss);
-
-        } catch (err) {
-            setError('Failed to load maintenance details.');
-            setLoading(false);
-        }
+        setUserId(id);
+    
+        setTimeout(() => {
+            navigate("/ShowPerson_Report/");
+        }, 100);
     };
 
 
