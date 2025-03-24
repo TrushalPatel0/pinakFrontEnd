@@ -48,6 +48,8 @@ import ShowPerson_Report from './components/ShowPerson_Report';
 import Bank_Credit_Report from './components/Bank_Credit_Report';
 import Bank_Debit_Report from './components/Bank_Debit_Report';
 import Maintenance_Report from './components/Maintenance_Report';
+import CashReport from './components/CashReport';
+import OffficeReport from './components/OffficeReport';
 import { DateUserProvider } from './components/Context/ContextDataShare';
 
 
@@ -106,6 +108,8 @@ const App = () => {
           <Route path='Bank_Credit_Report' element={<Bank_Credit_Report />} />
           <Route path='Bank_Debit_Report' element={<Bank_Debit_Report />} />
           <Route path='Maintenance_Report' element={<Maintenance_Report />} />
+          <Route path='CashReport' element={<CashReport />} />
+          <Route path='OffficeReport' element={<OffficeReport />} />
         </Route>
       </Routes>
     </Router>

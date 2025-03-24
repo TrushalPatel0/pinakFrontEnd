@@ -22,6 +22,8 @@ const Reports = () => {
             <Link to="/Bank_Credit_Report/"><div className='card'>Bank Credit Report</div></Link>
             <Link to="/Bank_Debit_Report/"><div className='card'>Bank Debit Report</div></Link>
             <Link to="/Maintenance_Report/"><div className='card'>Maintenance Report</div></Link>
+            <Link to="/CashReport/"><div className='card'>Cash Report</div></Link>
+            <Link to="/OfficeReport/"><div className='card'>Office Report</div></Link>
             </div>
         </div>
 
