@@ -19,6 +19,9 @@ export const DateUserProvider = ({ children }) => {
   const [projectList, setProjectList] = useState([]);
   const [projectID, setProjectID] = useState(null);
 
+  const [officeExpenseList, setOfficeExpenseList] = useState([])
+  const [officeExpenseID, setOfficeExpenseID] = useState(null);
+
   // Dummy user data for react-select
   const users = [
     { value: null, label: "Select Person" },
@@ -44,6 +47,14 @@ export const DateUserProvider = ({ children }) => {
     })),
   ];
   
+
+  const offices = [
+    { value: null, label: "Select Office Types Kharch" },
+    ...officeExpenseList.map((office) => ({
+      value: office.office_kharch_type_id,
+      label: office.office_kharch_type_name,
+    })),
+  ];
   
 
   useEffect(() => {
@@ -72,6 +83,15 @@ export const DateUserProvider = ({ children }) => {
     fetchMachinesList()
   }, [])
 
+  useEffect(() => {
+    const fetchOfficeList = async () => {
+        const response = await axios.get(`${url}office_kharch_types_list`)
+        console.log("==========", response.data.data)
+        setOfficeExpenseList(response.data.data)
+    }
+    fetchOfficeList()
+  }, [])
+
 
 
 
@@ -79,7 +99,7 @@ export const DateUserProvider = ({ children }) => {
   return (
     <DateUserContext.Provider value={{ startDate, setStartDate, endDate, setEndDate, userId, setUserId, users, machineID,
     setMachineID,
-      machines, projectID, setProjectID, projects }}>
+      machines, projectID, setProjectID, projects, officeExpenseID, setOfficeExpenseID, offices }}>
       {children}
     </DateUserContext.Provider>
   );
@@ -90,6 +110,7 @@ export const useDate = () => useContext(DateUserContext);
 export const useUser = () => useContext(DateUserContext);
 export const useMachine = () => useContext(DateUserContext);
 export const useProject = () => useContext(DateUserContext)
+export const useOffice = () => useContext(DateUserContext)
 
 // DateUserSelection Component
 export const DateSelection = () => {
@@ -162,6 +183,22 @@ export const ProjectSelection = () => {
         options={projects}
         value={projects.find((project) => project.value === projectID)}
         onChange={(selectedOption) => setProjectID(selectedOption.value)}
+      />
+    </div>
+  );
+};
+
+
+export const OfficeSelection = () => {
+  const { officeExpenseID, setOfficeExpenseID, offices } = useOffice();
+
+  return (
+    <div style={{ padding: "10px", maxWidth: "300px" }}>
+      <label>Select Project:</label>
+      <Select
+        options={offices}
+        value={offices.find((office) => office.value === officeExpenseID)}
+        onChange={(selectedOption) => setOfficeExpenseID(selectedOption.value)}
       />
     </div>
   );
